@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="description" content="AI楽曲批評ツール ── 生成AIで制作した楽曲を、音楽プロデューサー・音楽評論家・一般リスナーの3つの視点から分析・批評・評価する無料ツール。音楽ファイルと歌詞を入れるだけで、曲調・構成・ミックス・歌詞を詳しく解析します。すべて端末内で処理され、音源が外部に送信されることはありません。">
+<meta name="theme-color" content="#1b2f4b">
+<meta property="og:title" content="AI楽曲批評ツール | あなたの曲を客観的に分析・批評">
+<meta property="og:description" content="音楽ファイルと歌詞を入れるだけで、プロデューサー・評論家・リスナーの3視点から批評。甘口・一般・辛口が選べます。">
+<meta property="og:type" content="website">
+<title>AI楽曲批評ツール | あなたの曲を客観的に分析・批評</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/icon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <p class="header-badge">MUSIC CRITIQUE TOOL</p>
+    <h1 class="site-title">AI楽曲批評ツール</h1>
+    <p class="site-lead">
+      あなたの曲を、プロデューサー・評論家・リスナーの3つの視点で分析。<br>
+      コンペに出す前に、客観的な批評と改善案をチェックできます。
+    </p>
+  </div>
+</header>
+
+<main>
+
+  <!-- ══════════ 入力 ══════════ -->
+  <section class="panel" id="input-panel" aria-label="作品のアップロード">
+    <h2 class="panel-title"><span class="step-num">1</span>作品をアップロード</h2>
+
+    <div class="form-row two-col">
+      <div class="field">
+        <label for="title-input">曲名<span class="opt">(任意・未入力ならファイル名を使用)</span></label>
+        <input type="text" id="title-input" maxlength="80" placeholder="例:夜明けのメロディ" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="genre-select">ジャンル・応募先の傾向</label>
+        <select id="genre-select">
+          <option value="pop" selected>ポップス</option>
+          <option value="rock">ロック</option>
+          <option value="ballad">バラード</option>
+          <option value="edm">EDM・ダンス</option>
+          <option value="hiphop">ヒップホップ・R&amp;B</option>
+          <option value="jazz">ジャズ・アコースティック</option>
+          <option value="anison">アニソン・ボカロ系</option>
+          <option value="bgm">劇伴・インストBGM</option>
+          <option value="free">指定なし</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="dropzone" class="dropzone" role="button" tabindex="0"
+         aria-label="音楽ファイルを選択またはドラッグアンドドロップ">
+      <div class="dropzone-inner">
+        <span class="dropzone-icon" aria-hidden="true">♪</span>
+        <p class="dropzone-text">音楽ファイルをドラッグ&amp;ドロップ、またはクリックして選択</p>
+        <p class="dropzone-sub">MP3 / WAV / M4A / AAC / FLAC / OGG(100MBまで)</p>
+      </div>
+      <input type="file" id="file-input" accept="audio/*,.mp3,.wav,.m4a,.aac,.flac,.ogg" hidden>
+    </div>
+
+    <div id="file-info" class="file-info" hidden>
+      <p id="file-name" class="file-name"></p>
+      <audio id="audio-preview" controls preload="metadata"></audio>
+      <button type="button" id="file-clear" class="text-btn">ファイルを削除</button>
+    </div>
+
+    <div class="field lyrics-field">
+      <label for="lyrics-input">歌詞<span class="opt">(インスト曲の場合は空欄でOK)</span></label>
+      <textarea id="lyrics-input" rows="10" maxlength="8000"
+        placeholder="ここに歌詞を貼り付けてください。&#10;空欄の場合はインスト曲として、メロディと構成を中心に批評します。"></textarea>
+    </div>
+
+    <div class="field">
+      <span class="field-label">批評の口調</span>
+      <div class="mode-seals" role="radiogroup" aria-label="批評の口調">
+        <button type="button" class="seal-btn" data-mode="amakuchi" role="radio" aria-checked="false">
+          <span class="seal-char">甘</span><span class="seal-label">甘口</span>
+          <span class="seal-desc">良いところを中心に、前向きなアドバイス</span>
+        </button>
+        <button type="button" class="seal-btn selected" data-mode="futsuu" role="radio" aria-checked="true">
+          <span class="seal-char">並</span><span class="seal-label">一般</span>
+          <span class="seal-desc">世間一般の耳で、バランスよく評価</span>
+        </button>
+        <button type="button" class="seal-btn" data-mode="karakuchi" role="radio" aria-checked="false">
+          <span class="seal-char">辛</span><span class="seal-label">辛口</span>
+          <span class="seal-desc">コンペ審査員の目線で、厳しくチェック</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="submit-row">
+      <button type="button" id="analyze-btn" class="primary-btn" disabled>批評を開始</button>
+      <p class="privacy-note">音源・歌詞はお使いの端末内でのみ解析され、外部へ送信されることは一切ありません。</p>
+    </div>
+  </section>
+
+  <!-- ══════════ 解析中 ══════════ -->
+  <section class="panel progress-panel" id="progress-panel" hidden aria-live="polite">
+    <div class="progress-enso" aria-hidden="true"></div>
+    <p id="progress-message" class="progress-message">音声を読み込んでいます…</p>
+    <div class="progress-track"><div id="progress-bar" class="progress-bar"></div></div>
+  </section>
+
+  <!-- ══════════ 批評結果 ══════════ -->
+  <section class="panel result-panel" id="result-panel" hidden aria-label="批評結果">
+    <h2 class="panel-title"><span class="step-num">2</span>批評結果</h2>
+
+    <div class="result-head">
+      <div class="result-meta">
+        <h3 id="result-title" class="result-title"></h3>
+        <p id="result-sub" class="result-sub"></p>
+      </div>
+      <div class="rank-seal" id="rank-seal" title="総合評価">
+        <span id="rank-char" class="rank-char">B</span>
+        <span id="rank-word" class="rank-word"></span>
+      </div>
+    </div>
+
+    <div class="score-area">
+      <canvas id="radar-canvas" width="360" height="330" aria-label="5項目の評価チャート"></canvas>
+      <div class="score-list" id="score-list"></div>
+    </div>
+
+    <div class="critique-tools">
+      <button type="button" id="tategaki-toggle" class="tool-btn">縦書きで読む</button>
+      <button type="button" id="copy-btn" class="tool-btn">コピー</button>
+      <button type="button" id="save-btn" class="tool-btn">テキスト保存(.txt)</button>
+      <button type="button" id="print-btn" class="tool-btn">印刷</button>
+    </div>
+
+    <article id="critique-body" class="critique-body"></article>
+
+    <div class="kaizen-box" id="kaizen-box">
+      <h3 class="kaizen-title">改善案 ── 次の一手</h3>
+      <ol id="kaizen-list" class="kaizen-list"></ol>
+    </div>
+
+    <div class="tech-box" id="tech-box">
+      <h3 class="tech-title">解析データ(技術情報)</h3>
+      <dl id="tech-list" class="tech-list"></dl>
+    </div>
+  </section>
+
+  <!-- ══════════ 履歴 ══════════ -->
+  <section class="panel" id="history-panel" aria-label="過去の批評">
+    <h2 class="panel-title"><span class="step-num">3</span>批評の履歴</h2>
+    <ul id="history-list" class="history-list"></ul>
+    <p id="history-empty" class="history-empty">まだ履歴はありません。最初の1曲をアップロードしてみましょう。</p>
+    <button type="button" id="history-clear" class="text-btn" hidden>履歴をすべて削除</button>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>AI楽曲批評ツール ── 楽曲はすべてお使いの端末の中だけで解析されます。音源・歌詞が外部サーバーへ送られることはありません。</p>
+  <p class="footer-small">本批評は音響解析と批評データベースに基づく参考意見です。最終的な作品の価値を決めるのは、作り手であるあなた自身です。</p>
+</footer>
+
+<script src="js/analyzer.js"></script>
+<script src="js/lyrics.js"></script>
+<script src="js/database.js"></script>
+<script src="js/critique.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
