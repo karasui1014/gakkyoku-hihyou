@@ -11,18 +11,20 @@
 <meta property="og:description" content="音楽ファイルと歌詞を入れるだけで、プロデューサー・評論家・リスナーの3視点から批評。甘口・一般・辛口が選べます。">
 <meta property="og:type" content="website">
 <title>AI楽曲批評ツール | あなたの曲を客観的に分析・批評</title>
-<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<link rel="icon" href="assets/icon-192.png" sizes="192x192" type="image/png">
-<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="icon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header class="site-header">
+  <span class="tate-deco tate-left" aria-hidden="true">音を聴く</span>
+  <span class="tate-deco tate-right" aria-hidden="true">心を記す</span>
   <div class="header-inner">
     <p class="header-badge">MUSIC CRITIQUE TOOL</p>
-    <h1 class="site-title">AI楽曲批評ツール</h1>
+    <h1 class="site-title">AI楽曲批評ツール<span class="title-seal" aria-hidden="true">評</span></h1>
     <p class="site-lead">
       あなたの曲を、プロデューサー・評論家・リスナーの3つの視点で分析。<br>
       コンペに出す前に、客観的な批評と改善案をチェックできます。
@@ -165,10 +167,10 @@
   <p class="footer-small">本批評は音響解析と批評データベースに基づく参考意見です。最終的な作品の価値を決めるのは、作り手であるあなた自身です。</p>
 </footer>
 
-<script src="js/analyzer.js"></script>
-<script src="js/lyrics.js"></script>
-<script src="js/database.js"></script>
-<script src="js/critique.js"></script>
-<script src="js/app.js"></script>
+<script src="analyzer.js"></script>
+<script src="lyrics.js"></script>
+<script src="database.js"></script>
+<script src="critique.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
