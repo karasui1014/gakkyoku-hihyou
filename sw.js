@@ -1,21 +1,21 @@
 /* Service Worker ── オフライン対応(PWA) */
 "use strict";
 
-const CACHE_NAME = "gakkyoku-hihyou-v1";
+const CACHE_NAME = "gakkyoku-hihyou-v3";
 const ASSETS = [
   "./",
   "./index.html",
-  "./css/style.css",
-  "./js/analyzer.js",
-  "./js/lyrics.js",
-  "./js/database.js",
-  "./js/critique.js",
-  "./js/app.js",
+  "./style.css",
+  "./analyzer.js",
+  "./lyrics.js",
+  "./database.js",
+  "./critique.js",
+  "./app.js",
   "./manifest.webmanifest",
-  "./assets/favicon.svg",
-  "./assets/icon-192.png",
-  "./assets/icon-512.png",
-  "./assets/apple-touch-icon.png"
+  "./favicon.svg",
+  "./icon-192.png",
+  "./icon-512.png",
+  "./apple-touch-icon.png"
 ];
 
 self.addEventListener("install", event => {

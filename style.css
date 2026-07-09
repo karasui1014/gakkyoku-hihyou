@@ -79,6 +79,30 @@ body {
   .tate-deco { display: none; }
 }
 
+.no-transfer-note {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  margin: 0;
+  padding: 4px 12px;
+  border: 1px solid rgba(216, 195, 145, .45);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, .18);
+  font-size: 10.5px;
+  letter-spacing: .04em;
+  color: #f0dfb0;
+  z-index: 1;
+}
+
+@media (max-width: 640px) {
+  .no-transfer-note {
+    position: static;
+    display: block;
+    width: fit-content;
+    margin: 0 auto 16px;
+  }
+}
+
 .header-badge {
   display: inline-block;
   margin: 0 0 18px;
